@@ -35,6 +35,8 @@ class MoviesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(request(), Movie::STORE_RULES);
+
         $movie = new Movie();
 
         $movie->title = $request->input('title');
@@ -82,6 +84,8 @@ class MoviesController extends Controller
     public function update(Request $request, $id)
     {
         $movie = Movie::find($id);
+
+
 
         $movie->title = $request->input('title');
         $movie->director = $request->input('director');
