@@ -12,8 +12,8 @@ class Movie extends Model
 
     const STORE_RULES = [
         'title' => 'required|unique:movies',
-        'director' => 'required|between:1,500',
-        'duration' => 'required',
+        'director' => 'required',
+        'duration' => 'required|between:1,500|integer',
         'releaseDate' => 'required|unique:movies',
         'imageUrl' => 'url'
     ];

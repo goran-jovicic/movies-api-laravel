@@ -12,8 +12,11 @@ class MoviesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        
+
+
         return Movie::all();
     }
 
@@ -83,19 +86,20 @@ class MoviesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $movie = Movie::find($id);
-
-
-
+        
         $movie->title = $request->input('title');
         $movie->director = $request->input('director');
         $movie->imageUrl = $request->input('imageUrl');
         $movie->duration = $request->input('duration');
         $movie->releaseDate = $request->input('releaseDate');
         $movie->genre = $request->input('genre');
-
+        
+        $this->validate(request(), Movie::STORE_RULES);
+        
         $movie->save();
-
+        
         return $movie;
     }
 
