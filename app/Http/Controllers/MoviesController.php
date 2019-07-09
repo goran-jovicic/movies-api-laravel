@@ -18,8 +18,6 @@ class MoviesController extends Controller
         $take = request()->input('take', Movie::get()->count());
         $skip = request()->input('skip',0);
         
-
-
         if($title){
             return Movie::search($title);
         } else if($take && $skip) {
