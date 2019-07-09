@@ -16,16 +16,15 @@ class MoviesController extends Controller
     {
         $title = request()->input('title');
         $take = request()->input('take', Movie::get()->count());
-        $skip = request()->input('skip',0);
-        
-        if($title){
-            return Movie::search($title);
-        } else if($take && $skip) {
+        $skip = request()->input('skip', 0);
+
+        if ($title) {
+            return Movie::search($title,$skip,$take);
+        } else if ($take && $skip) {
             return Movie::skip($skip)->take($take)->get();
         } else {
             return Movie::all();
         }
-
     }
 
     /**
@@ -60,7 +59,6 @@ class MoviesController extends Controller
         $movie->save();
 
         return $movie;
-        
     }
 
     /**
@@ -94,20 +92,20 @@ class MoviesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $movie = Movie::find($id);
-        
+
         $movie->title = $request->input('title');
         $movie->director = $request->input('director');
         $movie->imageUrl = $request->input('imageUrl');
         $movie->duration = $request->input('duration');
         $movie->releaseDate = $request->input('releaseDate');
         $movie->genre = $request->input('genre');
-        
+
         $this->validate(request(), Movie::STORE_RULES);
-        
+
         $movie->save();
-        
+
         return $movie;
     }
 
