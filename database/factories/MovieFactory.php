@@ -10,7 +10,7 @@ $factory->define(Movie::class, function (Faker $faker) {
         'title' => $faker->sentences(1,true),
         'director' => $faker->name(),
         'imageUrl' => $faker->imageUrl(),
-        'duration' => $faker->numberBetween(1,600),
+        'duration' => $faker->numberBetween(60,500),
         'releaseDate' => $faker->date(),
         'genre' => $faker->sentences(1,true),
     ];

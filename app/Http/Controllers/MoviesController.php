@@ -12,12 +12,22 @@ class MoviesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        $title = request()->input('title');
+        $take = request()->input('take', Movie::get()->count());
+        $skip = request()->input('skip',0);
         
 
 
-        return Movie::all();
+        if($title){
+            return Movie::search($title);
+        } else if($take && $skip) {
+            return Movie::skip($skip)->take($take)->get();
+        } else {
+            return Movie::all();
+        }
+
     }
 
     /**

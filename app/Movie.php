@@ -17,4 +17,8 @@ class Movie extends Model
         'releaseDate' => 'required|unique:movies',
         'imageUrl' => 'url'
     ];
+
+    public static function search ($title) {
+        return self::where('title', 'LIKE', '%'. $title . '%')->get();
+    }
 }
