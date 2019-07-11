@@ -19,7 +19,7 @@ class MoviesController extends Controller
         $skip = request()->input('skip', 0);
 
         if ($title) {
-            return Movie::search($title,$skip,$take);
+            return Movie::search($title, $skip, $take);
         } else if ($take && $skip) {
             return Movie::skip($skip)->take($take)->get();
         } else {
@@ -37,14 +37,33 @@ class MoviesController extends Controller
         //
     }
 
+    /* PROVERA DA LI FILM POSTOJI U BAZI PODATAKA */
+    public function checkIfExists($title, $date)
+    {
+        if (Movie::where('title', $title)->first()) {
+            if (Movie::where('releaseDate', $date)->first()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
+        $request->duration = intval($request->duration);
+        if ($this->checkIfExists($request->input('title'), $request->input('releaseDate'))) {
+            print_r('Postoji film sa tim imenom i istim datumom');
+            return;
+        }
+
         $this->validate(request(), Movie::STORE_RULES);
 
         $movie = new Movie();
@@ -92,6 +111,11 @@ class MoviesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->duration = intval($request->duration);
+        if ($this->checkIfExists($request->input('title'), $request->input('releaseDate'))) {
+            print_r('Postoji film sa tim imenom i istim datumom');
+            return;
+        }
 
         $movie = Movie::find($id);
 

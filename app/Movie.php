@@ -11,10 +11,10 @@ class Movie extends Model
     ];
 
     const STORE_RULES = [
-        'title' => 'required|unique:movies',
+        'title' => 'required',
         'director' => 'required',
         'duration' => 'required|between:1,500|integer',
-        'releaseDate' => 'required|unique:movies',
+        'releaseDate' => 'required',
         'imageUrl' => 'url'
     ];
 
